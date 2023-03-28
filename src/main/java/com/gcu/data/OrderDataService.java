@@ -11,12 +11,14 @@ import com.gcu.data.repository.OrdersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class OrderDataService implements DataAccessInterface<OrderEntity>{
     @Autowired
     OrdersRepository ordersRepository;
-
+    Logger logger = LoggerFactory.getLogger(OrderDataService.class);
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplateObject;
     public OrderDataService(OrdersRepository ordersRepository, DataSource dataSource){
@@ -31,8 +33,10 @@ public class OrderDataService implements DataAccessInterface<OrderEntity>{
         try{
             Iterable<OrderEntity> orderIterable = ordersRepository.findAll();
             orderIterable.forEach(orders::add);
+            logger.info("Getting all orders");
             return orders;
         }catch(Exception e){
+            logger.info("There was an issue getting the orders");
             e.printStackTrace();
         }
         return null;
