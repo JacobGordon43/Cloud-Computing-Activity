@@ -18,10 +18,14 @@ import com.gcu.business.OrdersBusinessServiceInterface;
 import com.gcu.business.SecurityBusinessService;
 import com.gcu.model.LoginModel;
 import com.gcu.model.OrderModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Controller
 @RequestMapping("/login")
 public class LoginController {
+	Logger logger = LoggerFactory.getLogger(LoginController.class);
+	
     //dependency injection
     //We can use autowiring on properties, setters, and constructors
     //Using autowired on a property eliminated the need to getters and setters
@@ -39,14 +43,16 @@ public class LoginController {
 	//Display login form view
 		model.addAttribute("title", "Login Form");
 		model.addAttribute("loginModel", new LoginModel());
+		logger.info("Entering login");
 		return "login";
 	}
 
     @PostMapping("/doLogin")
     public String doLogin(@Valid LoginModel loginModel, BindingResult bindResult, Model model){
-        System.out.println(String.format("Form with username of %s and password of %s", loginModel.getUsername(), loginModel.getPassword()));
+        //System.out.println(String.format("Form with username of %s and password of %s", loginModel.getUsername(), loginModel.getPassword()));
         if(bindResult.hasErrors()){
             model.addAttribute("title", "login form");
+            logger.info("There was an error in logging in");
             return "login";
         }
 
@@ -55,9 +61,10 @@ public class LoginController {
 
         //make a call to the orders business service
         service.test();
-        //Dispaly the Orders view
+        //Display the Orders view
         model.addAttribute("title", "My Orders");
         model.addAttribute("orders", service.getOrders());
+        logger.info(String.format("Logged in with username of %s and password of %s", loginModel.getUsername(), loginModel.getPassword()));
         return "orders";
     }
 }
