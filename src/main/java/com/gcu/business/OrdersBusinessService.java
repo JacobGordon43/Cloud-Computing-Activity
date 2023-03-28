@@ -6,7 +6,8 @@ import java.util.List;
 import com.gcu.data.OrderDataService;
 import com.gcu.data.entity.OrderEntity;
 import com.gcu.model.OrderModel;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 //To access the interface module, the interface must be "implemented"
@@ -17,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class OrdersBusinessService implements OrdersBusinessServiceInterface{
     @Autowired
     OrderDataService service;
+    
+    Logger logger = LoggerFactory.getLogger(OrdersBusinessService.class);
     public void test() {
         System.out.println("Hello from the OrdersBusinessService");        
     }
@@ -32,11 +35,11 @@ public class OrdersBusinessService implements OrdersBusinessServiceInterface{
     }
 
     public void init() {
-        System.out.println("In the OrderBusinessService.init()");        
+        logger.info("Initializing the Order Business Service");
     }
 
     
     public void destroy() {
-        System.out.println("In the OrderBusinessService.destroy()");        
+        logger.info("Destroying the Order Business Service");
     }
 }
