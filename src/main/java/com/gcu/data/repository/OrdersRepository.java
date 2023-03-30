@@ -9,6 +9,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface OrdersRepository extends CrudRepository<OrderEntity, Long>{
     @Override
-    @Query(value = "SELECT * FROM z0ywbqofzrrf5e2y.order")
+    @Query(value = "SELECT * FROM qzwos0kkw06oew76.order")
     public List<OrderEntity> findAll();
 }
